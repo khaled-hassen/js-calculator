@@ -1,0 +1,156 @@
+$font: 'Varela Round',
+sans-serif;
+$buttonDimension: 90px;
+$gap: 20px;
+$sliderOffColor: rgba(226, 224, 224, 0.795);
+$sliderOnColor: rgba(14, 108, 184, 0.548);
+
+$numberColor: rgb(246, 246, 246);
+$numberColorHover: rgba(197, 194, 194, 0.63);
+$operationColor: rgb(232, 234, 247);
+$operationColorHover: rgba(203, 209, 241, 0.753);
+$equalColor: rgb(42, 98, 254);
+$equalColorHover: rgba(7, 73, 255, 0.726);
+$calculatorColor: #fff;
+$textColor: #000;
+
+$transitionTime: 0.2s;
+
+@mixin buttonStyle($width, $color, $colorHover, $radius: 100%) {
+    font-family: $font;
+    height: $buttonDimension;
+    width: $width;
+    border-radius: $radius;
+    outline: none;
+    border: none;
+    font-size: (40 * $buttonDimension) / 100;
+    background-color: $color;
+    color: $textColor;
+    line-height: $buttonDimension;
+    transition: background-color $transitionTime ease, color $transitionTime ease;
+
+    &:hover {
+        background-color: $colorHover;;
+    }
+}
+
+body {
+    background-color: $calculatorColor;
+    transition: background-color $transitionTime ease;
+}
+
+.number-btn {
+    @include buttonStyle($buttonDimension, $numberColor, $numberColorHover);
+}
+
+.zero-btn {
+    @include buttonStyle(2 * $buttonDimension + $gap, $numberColor, $numberColorHover, $buttonDimension);
+    text-align: left;
+    padding-left: 35 * $buttonDimension / 100;
+    // reserve 2 paces for zero number button
+    grid-column: 1 / span 2;
+}
+
+.operation-btn,
+.sign-btn,
+.clear-btn {
+    @include buttonStyle($buttonDimension, $operationColor, $operationColorHover);
+}
+
+.equal-btn {
+    @include buttonStyle($buttonDimension, $equalColor, $equalColorHover);
+    color: #FFF;
+}
+
+.grid-container {
+    display: grid;
+    gap: $gap;
+    grid-template-columns: $buttonDimension $buttonDimension $buttonDimension $buttonDimension;
+    grid-template-rows: $buttonDimension $buttonDimension $buttonDimension $buttonDimension;
+    width: fit-content;
+}
+
+.calculator {
+    background-color: $calculatorColor;
+    margin: 0 auto;
+    height: fit-content;
+    width: fit-content;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.095);
+    margin-top: 30px;
+    padding: $gap;
+    border-radius: 2%;
+    user-select: none;
+    transition: background-color $transitionTime ease;
+}
+
+#display {
+    $height: 150px;
+    font-family: $font;
+    height: $height;
+    width: 100%;
+    text-align: right;
+    font-size: 70px;
+    line-height: $height;
+    color: $textColor;
+    transition: color $transitionTime ease;
+}
+
+// dark mode switcher 
+/* Hide default HTML checkbox */
+.switch {
+    float: left;
+    position: relative;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $sliderOffColor;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: $sliderOnColor;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px $sliderOnColor;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
